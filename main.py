@@ -53,3 +53,16 @@ def takeCommand():
 if __name__ == "__main__":
     while True:
         query = takeCommand().lower()
+
+        if 'what' and 'my' and 'name' in query:
+            # print('Searching for your name in the stored files...')
+            user_name_file = open(
+                'C:\\Users\\vivek\\OneDrive\\Desktop\\DHRUV\\Coding\\Python\\DOTa\\Sources\\user_name.txt')
+            user_name_file_location = pathlib.Path(
+                'C:\\Users\\vivek\\OneDrive\\Desktop\\DHRUV\\Coding\\Python\\DOTa\\Sources\\user_ame.txt')
+            if user_name_file_location.exists:
+                # print('Found your name in the stored location')
+                user_read_name = user_name_file_location.read_text()
+                speak(f"Your name is {user_read_name} ")
+            else:
+                speak("I apologise, I was not able to find your name")
