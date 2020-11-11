@@ -10,12 +10,15 @@ import pyttsx3
 import speech_recognition as sr
 import sys
 import datetime
+import time
 from playsound import playsound
 import webbrowser
 import youtube_search
 import wikipedia
 import os
 import pathlib
+from selenium import webdriver
+import pyautogui
 
 engine = pyttsx3.init('sapi5')
 voices = engine.getProperty('voices')
@@ -67,9 +70,15 @@ def takeCommand():
         return "None"
     return query
 
+# Chrome DRIVER for Automation.
+
+# DRIVER_PATH = 'C:\\Program Files (x86)\\chromium\\chromedriver.exe'
+# driver = webdriver.Chrome(DRIVER_PATH)
+
 
 if __name__ == "__main__":
-    wishMe()
+    # Wishes the user upon starting the Voice Assistant.
+    # wishMe()
     while True:
         query = takeCommand().lower()
 
@@ -185,23 +194,34 @@ if __name__ == "__main__":
             os.startfile(spotifyPath)
             speak('Opening Spotify')
 
+        # Searches for the requested track on Spotify
+        elif 'on' and 'spotify' in query:
+            # Replace all other strings from the QUERY and just leave the song name.
+            spotify_song_name = query.replace("search", "")
+            spotify_song_name = spotify_song_name.replace("play", "")
+            spotify_song_name = spotify_song_name.replace("for", "")
+            spotify_song_name = spotify_song_name.replace(" on ", "")
+            spotify_song_name = spotify_song_name.replace("spotify", "")
+            print(f"Searching for {spotify_song_name} on Spotify")
+            # Open the URL and add the SONG NAME in the end to search for the requested song.
+            webbrowser.open(
+                'https://open.spotify.com/search/' + spotify_song_name)
+            # Check if the user want's to PLAY the song.
+            if 'play' in query:
+                # Make sure the webpage is properly loaded
+                time.sleep(6)
+                # Click on the location of the PLAY BUTTON.
+                pyautogui.click(607, 377)
+                speak(f"Okay! Playing {spotify_song_name} on Spotify")
+            # If the user doesn't say "PLAY" in the QUERY then it will just search for the song.
+            else:
+                speak('Here is the track you asked for.')
+
         # Opens My folder [DHRUV] when the user tells to
         elif 'open my folder' in query:
             dhruvFolder = "C:\\Users\\vivek\\OneDrive\\Desktop\\DHRUV"
             os.startfile(dhruvFolder)
             speak('Opened your folder')
-
-        # Opens Hue when the user tells to
-        elif 'play hue' in query:
-            hueFolder = 'C:\\Users\\vivek\\OneDrive\\Desktop\\DHRUV\\Hue'
-            os.startfile(hueFolder)
-            speak('Enjoy playing Hue')
-
-        # Opens Zoom to attend class
-        elif 'need to attend coaching class' in query:
-            zoomFolder = 'C:\\Users\\vivek\\AppData\\Roaming\\Zoom\\bin\\Zoom.exe'
-            os.startfile(zoomFolder)
-            speak('Study hard!')
 
         elif 'attend school classes' in query:
             webbrowser.open(
@@ -229,6 +249,29 @@ if __name__ == "__main__":
                     speak("Hey there. It's time!")
                     break
 
+        # MATHEMATICAL OPERATIONS
+        elif '+' and 'plus' in query:
+            def addition():
+                # first_number = int(query[0])
+                # second_number = int(query[4])
+                # print(first_number)
+                # print(second_number)
+                # num_sum = first_number + second_number
+                # print(num_sum)
+                # speak(f"The answer is {num_sum} ")
+                res = [int(i) for i in query.split() if i.isdigit()]
+                # print(res)
+                first_number = int(res[0])
+                second_number = int(res[1])
+                # print(first_number)
+                # print(second_number)
+                num_sum = first_number + second_number
+                print(num_sum)
+                speak(f"The answer is {num_sum} ")
+
+            # Execute the function
+            addition()
+
         # CASUAL CONVERSATIONS #
 
         # Tells the user's name when asked
@@ -248,29 +291,37 @@ if __name__ == "__main__":
             what_is_my_name()
 
         elif 'what is your name' in query:
-            speak("I am Dot. What's your name?")
-            user_name = takeCommand()
-            speak(f"Nice meeting you {user_name} ")
+            speak("I am Dot.")
 
         elif 'who are you' in query:
             speak("I'm Dot, your Personal Assistant")
 
         # says it is fine when the user asks about Dot and asks the user about them
         elif 'how are you' in query:
-            speak("I'm good. how bout you?")
-            print("Good or Bad?")
-            feeling = takeCommand().lower()
-            not_good_keywords = ["bad", "not", "depressed", "sick"]
-            feeling_good_keywords = ["good", "great", "happy"]
-            for b in not_good_keywords:
-                # print(b)
-                if b in feeling:
-                    speak(
-                        "Ohh! That doesn't sound good. I'm here for you, what can I do for you to make you happy")
+            def user_feeling():
+                speak("I'm good. how bout you?")
+                print("Good or Bad?")
+                feeling = takeCommand().lower()
+                feeling_bad_keywords = ["bad", "not", "depressed", "sick"]
+                feeling_good_keywords = ["good", "great", "happy"]
+                for b in feeling_bad_keywords:
+                    # print(b)
+                    if b in feeling:
+                        speak(
+                            "Ohh! That doesn't sound good. I'm here for you, what can I do for you to make you happy")
+                    else:
+                        print('Returning to FEELING')
+                        return feeling
 
-            for g in feeling_good_keywords:
-                if g in feeling:
-                    speak("That is great! Glad to hear that.")
+                for g in feeling_good_keywords:
+                    if g in feeling:
+                        speak("That is great! Glad to hear that.")
+                    else:
+                        print('Returning to FEELING')
+                        return feeling
+
+            # Execute the code
+            user_feeling()
 
         # Becomes happy when the user tells "THANK YOU"
         elif 'thank' in query:
