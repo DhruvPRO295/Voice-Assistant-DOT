@@ -7,11 +7,12 @@ Made for ME
 # Import packages
 
 import pyttsx3
+from gtts import gTTS
 import speech_recognition as sr
 import sys
 import datetime
 import time
-from playsound import playsound
+import playsound
 import webbrowser
 import youtube_search
 import wikipedia
@@ -20,11 +21,19 @@ import pathlib
 from selenium import webdriver
 import pyautogui
 
-engine = pyttsx3.init('sapi5')
+engine = pyttsx3.init(driverName='sapi5')
 voices = engine.getProperty('voices')
-engine.setProperty('voice', voices[0].id)
+print(voices)
+engine.setProperty('voice', voices[2].id)
 
 # Speak function
+
+# GTTS
+# def say(text):
+#     tts = gTTS(text=text, lang="en")
+#     filename = 'voice.mp3'
+#     tts.save(filename)
+#     playsound.playsound(filename)
 
 
 def speak(audio):
@@ -124,7 +133,7 @@ if __name__ == "__main__":
         # Searches for the requested vidoe on YouTube
         elif 'on' and 'youtube' in query:
             YT_Search = query.replace("search", "")
-            YT_Search = YT_Search.replace("for", "")
+            YT_Search = YT_Search.replace(" for ", "")
             YT_Search = YT_Search.replace("on", "")
             YT_Search = YT_Search.replace("youtube", "")
             webbrowser.open(
@@ -132,22 +141,22 @@ if __name__ == "__main__":
             speak(f"Searching for {YT_Search} on YouTube.")
 
         # Opens VS Code
-        elif 'open vs code' in query:
+        elif 'open' and 'vs code' in query:
             vscode_dir = '"C:\\Users\\vivek\\AppData\\Local\\Programs\\Microsoft VS Code\\Code.exe"'
             os.startfile(vscode_dir)
             speak("Opening VS Code. Code well..")
 
-        # Opens Twitter when the user tells to
-        elif 'open twiter' in query:
+        # Opens Twitter
+        elif 'open' and 'twiter' in query:
             webbrowser.open("https://twitter.com/explore")
             speak('Opening Twitter')
 
-        # Opens Hangouts when the user tells to
+        # Opens Hangouts
         elif 'open hangouts' in query:
             webbrowser.open('https://hangouts.google.com/')
             speak('Opening Hangouts')
 
-        # Opens Google when the user tells to
+        # Opens Google
         elif 'open google' in query:
             webbrowser.open('https://www.google.com/')
             speak('Opening Google')
@@ -161,13 +170,13 @@ if __name__ == "__main__":
 
         # Searches Google
         elif 'on' and 'google' in query:
-            google_voice_search = query.replace(" find ", "")
+            google_voice_search = query.replace("find", "")
             google_voice_search = google_voice_search.replace(
-                " search ", "")
+                "search", "")
             google_voice_search = google_voice_search.replace(
-                " on ", "")
+                "on", "")
             google_voice_search = google_voice_search.replace(
-                " google ", "")
+                "google", "")
             speak(f"Searching Google for {google_voice_search}")
             webbrowser.open(
                 'https://google.com/?#q=' + google_voice_search)
@@ -213,7 +222,7 @@ if __name__ == "__main__":
             speak("Opening Instagram DM's")
 
         # Opens Trello when the user tells to
-        elif 'open' and 'trello' in query:
+        elif 'open' and 'trello' and 'note' in query:
             webbrowser.open(
                 'https://trello.com/dhruvanand295/boards')
             speak("Opening Trello")
@@ -254,7 +263,7 @@ if __name__ == "__main__":
                 time.sleep(6)
                 # Click on the location of the PLAY BUTTON.
                 pyautogui.click()
-                # pyautogui.click(607, 377)
+                pyautogui.click(607, 377)
                 speak(
                     f"Okay! Playing {spotify_song_name} on Spotify")
             # If the user doesn't say "PLAY" in the QUERY then it will just search for the song.
@@ -304,6 +313,10 @@ if __name__ == "__main__":
             addition()
 
         # CASUAL CONVERSATIONS #
+
+        # Replies when the user tells hello.
+        elif 'hello' in query:
+            speak("Hello there")
 
         # Tells the user's name when asked
         elif 'what' and 'my' and 'name' in query:
