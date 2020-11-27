@@ -1,0 +1,49 @@
+"What Is My Name?"
+
+	-Open a file named 'user_name'.
+	-Store the users name in it.
+	-Read out the name written in it.
+
+	--Check if the file is existing;
+	--Check if the file is empty;
+		-Look if there are any strings stored in it.
+
+		-IF any of the above happens, then ask the user to give a name and then store it.
+
+
+"HOW ARE YOU?":
+
+	-Tells it is doing well.
+		-Asks about the user.
+	-Listens to the user's input.
+		-IF the users input is something BAD then it will say something good to make the user happy.
+		-ELIF there is something HAPPY in the users input, then it will also express happiness.
+
+	-IF there is a problem in listening, then it should RETURN back to FEELING instead to QUERY.
+
+	Advanced "HELLO" speaking:
+		-
+
+
+	MATHEMATICS:
+
+		-ADDITION
+			--The QUERY will also have STRINGS so it should only look for INTEGERS and ADD the two of them.
+		-SUBTRACTION
+		-MULTIPLICATION
+		-DIVISION 
+
+Play Music on Spotify:
+	-Listen for the song name requested by the user.
+	-replace all other strings in the QUERY other than the song name.
+	-Open webbroswer and search for the requested track.
+		-And check IF the user says PLAY in the QUERY.
+			--IF true, then PLAY the song using SELENIUM. 
+				-I will use PYAUTOGUI
+			--IF false, then just open the page of the song.]
+				-CURSOR_POSITION: x=607; y=377;
+
+Create a WAKE keyword:
+	-WAKE_KEYWORD = 'Hey DOT'(lowered)
+	-Create a WHILE loop.
+	-Make sure the WAKE_KEYWORD is said atleast once for the assistant to listen for the folloing query.
